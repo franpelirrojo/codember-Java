@@ -1,8 +1,6 @@
 package retos;
 
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,29 +8,25 @@ import java.util.stream.Collectors;
 
 public class PrimerReto {
     public static void main(String[] args) {
-        BufferedReader reader = null;
-        String resultado = " ";
+        BufferedReader reader;
+        String result = " ";
 
         try {
-            reader = new BufferedReader(new FileReader(".\\src\\data.txt"));
-            List<String> palabras = new ArrayList<>();
+            reader = new BufferedReader(new FileReader(".\\src\\dataRetoUno.txt"));
+            List<String> words = new ArrayList<>();
 
             while (reader.ready()){
                 String line = reader.readLine();
-                palabras = List.of(line.split(" "));
+                words = List.of(line.split(" "));
             }
 
-            Map<String, Long> conteo = palabras.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
-            for (Map.Entry<String, Long> entry : conteo.entrySet()){
-                resultado = resultado.concat(entry.getKey() + conteo.get(entry.getKey()));
+            Map<String, Long> count = words.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+            for (Map.Entry<String, Long> entry : count.entrySet()){
+                result = result.concat(entry.getKey() + count.get(entry.getKey()));
             }
 
-        } catch (FileNotFoundException e) { throw new RuntimeException(e);
+            System.out.println(result);
         } catch (IOException e) { throw new RuntimeException(e);
-        } finally {
-            try {reader.close();} catch (IOException e) {throw new RuntimeException(e);}
         }
-
-        System.out.println(System.getProperty("user.dir"));
     }
 }
